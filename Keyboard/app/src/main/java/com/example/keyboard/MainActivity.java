@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Looper;
@@ -88,17 +89,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         createNotificationChannel();
 
+        //NewMessageNotification naman = new NewMessageNotification();
+        //naman.notify(this, "FUCK B", 5, "1");
+        //naman.execute();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                .setContentTitle("Title")
-                .setContentText("Content")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        //naman.notify(this, "FUCK B", 5, "1", picture);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(123, builder.build());
+
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+//                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+//                .setContentTitle("Title")
+//                .setContentText("Content")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//        // notificationId is a unique int for each notification that you must define
+//        notificationManager.notify(123, builder.build());
 
 
         //(new Startup()).execute();

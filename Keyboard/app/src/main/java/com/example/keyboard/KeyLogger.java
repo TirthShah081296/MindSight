@@ -2,6 +2,7 @@ package com.example.keyboard;
 
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -38,7 +39,7 @@ public class KeyLogger extends AccessibilityService {
 
 
 
-    static void getSentiment(String text, final String time){
+    void getSentiment(String text, final String time){
         naturalLanguageService = new CloudNaturalLanguage.Builder(
                 AndroidHttp.newCompatibleTransport(),
                 new AndroidJsonFactory(),
@@ -87,7 +88,7 @@ public class KeyLogger extends AccessibilityService {
         }.execute();
     }
     //dummy comment
-    static void writeToFB(float score,float magnitude,String time){
+    void writeToFB(float score,float magnitude,String time){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             Log.d("CurrentDatabase",currentUser.getEmail());
@@ -101,15 +102,29 @@ public class KeyLogger extends AccessibilityService {
 //            magnitudeRef.setValue(magnitude);
 
 
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                    .setContentTitle("TITLE ")
-//                    .setContentText("CONTENT")
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+//            String msg = "your message";
+//            Intent intent = new Intent(this , NewMessageNotification.class);
+//            intent.putExtra("message",msg);
+//            startActivity(intent);
+
+
+            //Intent intent = new Intent(this, NewMessageNotification.class);
+
+
+            System.out.println("PogU");
+
+            NewMessageNotification naman = new NewMessageNotification();
+            naman.notify(this, "FUCK B", 5, "1");
+
+            //Intent intent = new Intent();
 
         }
 
 
     }
+
+
 
     private class SendToServerTask extends AsyncTask<String, Void, String> {
         @Override

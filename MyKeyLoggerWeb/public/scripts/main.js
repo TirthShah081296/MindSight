@@ -54,7 +54,7 @@ function getUserName() {
   
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
-  data.addColumn('number', 'Score');
+  data.addColumn('number', 'Sentiment Score');
 
   allData.on('value',function(snapshot) {
     console.log('Key: '+snapshot.key);

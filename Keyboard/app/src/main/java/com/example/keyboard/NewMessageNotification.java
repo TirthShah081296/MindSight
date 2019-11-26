@@ -46,7 +46,7 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
      */
 
     public static void notify(final Context context,
-                              final String exampleString, final int number, final String channelId, Bitmap picture) {
+                              final String joke, final int number, final String channelId) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
@@ -58,13 +58,10 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
             //final Bitmap picture = BitmapFactory.decodeStream(new java.net.URL("https://res.cloudinary.com/demo/image/upload/w_250,h_250,c_mfit/w_700/sample.jpg").openStream());
             //final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
-            System.out.println("AYAN");
 
-            final String ticker = exampleString;
-            final String title = res.getString(
-                    R.string.new_message_notification_title_template, exampleString);
-            final String text = res.getString(
-                    R.string.new_message_notification_placeholder_text_template, exampleString);
+            //final String ticker = exampleString;
+            final String title = "Hey a new joke pepeLaugh";
+            final String text = joke;
 
 
             //new NotificationCompat.Builder(this, "1")
@@ -88,10 +85,10 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
 
                     // Provide a large icon, shown with the notification in the
                     // notification drawer on devices running Android 3.0 or later.
-                    .setLargeIcon(picture)
+                    //.setLargeIcon(picture)
 
                     // Set ticker text (preview) information for this notification.
-                    .setTicker(ticker)
+                    //.setTicker(ticker)
 
                     // Show a number. This is useful when stacking notifications of
                     // a single type.
@@ -108,19 +105,19 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
 
                     // Set the pending intent to be initiated when the user touches
                     // the notification.
-                    .setContentIntent(
-                            PendingIntent.getActivity(
-                                    context,
-                                    0,
-                                    new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")),
-                                    PendingIntent.FLAG_UPDATE_CURRENT))
+//                    .setContentIntent(
+//                            PendingIntent.getActivity(
+//                                    context,
+//                                    0,
+//                                    new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")),
+//                                    PendingIntent.FLAG_UPDATE_CURRENT))
 
                     // Show expanded text content on devices running Android 4.1 or
                     // later.
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(text)
                             .setBigContentTitle(title)
-                            .setSummaryText("Dummy summary text"))
+                            .setSummaryText("A new joke LUL"))
 
                     // Example additional actions for this notification. These will
                     // only show on devices running Android 4.1 or later, so you

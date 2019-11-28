@@ -46,7 +46,7 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
      */
 
     public static void notify(final Context context,
-                              final String joke, final int number, final String channelId) {
+                              final String displayData, String link, final int number, final String channelId) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
@@ -61,9 +61,11 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
 
             //final String ticker = exampleString;
             final String title = "Hey a new joke pepeLaugh";
-            final String text = joke;
+            final String text = displayData;
+            //link = ;
+            //System.out.println("LINK THE SINH" +link+"--------");
 
-
+            //link = "https://open.spotify.com/track/6WrI0LAC5M1Rw2MnX2ZvEg";
             //new NotificationCompat.Builder(this, "1")
             final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
 
@@ -109,7 +111,7 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
 //                            PendingIntent.getActivity(
 //                                    context,
 //                                    0,
-//                                    new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")),
+//                                    new Intent(Intent.ACTION_VIEW, Uri.parse(link)),
 //                                    PendingIntent.FLAG_UPDATE_CURRENT))
 
                     // Show expanded text content on devices running Android 4.1 or
@@ -142,6 +144,17 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
                     // Automatically dismiss the notification when it is touched.
                     .setAutoCancel(true);
 
+
+            if(link!=null)
+            {
+                System.out.println("LINK IS HEREEEREEE");
+                builder.setContentIntent(
+                            PendingIntent.getActivity(
+                                    context,
+                                    0,
+                                    new Intent(Intent.ACTION_VIEW, Uri.parse(link.trim())),
+                                    PendingIntent.FLAG_UPDATE_CURRENT));
+            }
             notify(context, builder.build());
 //        } catch (IOException e) {
 //            e.printStackTrace();

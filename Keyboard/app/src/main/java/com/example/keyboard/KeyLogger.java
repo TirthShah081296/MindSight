@@ -1,12 +1,15 @@
 package com.example.keyboard;
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -14,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -102,90 +106,12 @@ public class KeyLogger extends AccessibilityService {
             DatabaseReference timeRef = userRef.child(time);
             //DatabaseReference scoreRef = timeRef.child("score");
             //DatabaseReference timevalRef = timeRef.child("time");
-            timeRef.setValue(score*magnitude*100);
-//            scoreRef.setValue(score);
-//            magnitudeRef.setValue(magnitude);
+            timeRef.setValue(score*100);
 
+            //float modifiedScore = score*magnitude*100;
 
+            getData(score*100);
 
-//            String msg = "your message";
-//            Intent intent = new Intent(this , NewMessageNotification.class);
-//            intent.putExtra("message",msg);
-//            startActivity(intent);
-
-
-            //Intent intent = new Intent(this, NewMessageNotification.class);
-
-            Boolean isImageNotification = false;
-
-            System.out.println("PogU");
-            String songname;
-
-            getData();
-//            userRef.getParent().child("Notification").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                System.out.println("start");
-//                HashMap<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
-//                HashMap<String, Object> songs = (HashMap<String,Object>) td.get("song");
-//                callMessageNotification(songs.get("song1").toString());
-//                //songname = songs.get("song1");
-//                System.out.println("end");
-//                //   List<Object> values = td.values();
-//
-//                //notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//
-//
-//        });
-
-//            Bitmap loadingpic=null;
-//            NewMessageNotification naman = new NewMessageNotification();
-//            naman.notify(this, "FUCK B", 5, "1");
-
-
-//            if(isImageNotification)
-//            {
-//                new AsyncTask<Void, Void, Bitmap>() {
-//                    @Override
-//                    protected Bitmap doInBackground(Void... urls) {
-//
-//                        try {
-//
-//                            System.out.println("SHERLOCK HERE HERE");
-//                            Bitmap picture = BitmapFactory.decodeStream(new java.net.URL("https://res.cloudinary.com/demo/image/upload/w_250,h_250,c_mfit/w_700/sample.jpg").openStream());
-//                            return picture;
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        return null;
-//                    }
-//
-//                    protected void onPostExecute(Bitmap picture) {
-//
-////                    loadingpic = picture;
-//                        System.out.println("SHERLOCKED");
-//                        callImageNotification(picture, "https://res.cloudinary.com/demo/image/upload/w_250,h_250,c_mfit/w_700/sample.jpg");
-//
-//
-//                    }
-//                }.execute();
-//            }
-//            else
-//            {
-//                callMessageNotification("let's talk about about me, let's talk about the 6'8 frame the 37 in verticle leap...the black steel that drapes down my back aka the bullet proof mullet, the google prototype scopes with built in LCD LED 1080p 3D sony technology. The Ethiopian poisonous catapillar aka SLICK DADDY. lets talk about the cabinets right behind me that go 40ft deep that house the other 95% of my trophies, the awards, the certificates, all claiming first place, right? Let me give you a little inside glimpse into the hotshot, video game life style of the two time of the international video game superstar. because thats what the channels about, thats what this domain is about, that is what society is about. you are looking at the new face of twitch and GODDAMN is twitch lucky... thats just off the top of my head");
-//            }
-
-
-
-
-            //Intent intent = new Intent();
 
         }
 
@@ -194,43 +120,119 @@ public class KeyLogger extends AccessibilityService {
 
 
 
-    private void getData()
+    private void getData(float score)
     {
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference(currentUser.getUid());
+        DatabaseReference dataRef = database.getReference(currentUser.getUid());
 
-        userRef.getParent().child("Notification").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("start");
-                HashMap<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
-                HashMap<String, Object> meme = (HashMap<String,Object>) td.get("meme");
+        String [] genreList = {"Chill", "hip-hop", "pop", "rock"};
 
-                callCorrospondingNotificationMethod(meme.get("meme2").toString(), true);
-                //callMessageNotification(songs.get("song1").toString());
-                //songname = songs.get("song1");
-                System.out.println("end");
-                //   List<Object> values = td.values();
+        String action=null;
+        //score = -90;
+        score = (int) score;
+        System.out.println("SCORE "+score);
+        if(score<0 && score>=-20)
+        {
+            action = "joke";
+        }
+        else if(score<-20 && score>=-40)
+        {
+            action = "meme";
+        }
+        else if(score<-40 && score>=-60)
+        {
+            action = "song";
+        }
+//        else if(score<-60 && score>=-80)
+//        {
+//            action = "familypic";
+//        }
+        else if(score<-80 && score>=-100)
+        {
+            action = "text";
+        }
 
-                //notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        final String final_action = action;
 
-            }
-        });
+        if(final_action=="text")
+        {
+            sendSMS();
+        }
+        else if(action!=null)
+        {
+            dataRef.getParent().child("Notification").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Random rand = new Random();
+
+                    System.out.println("start "+final_action);
+                    HashMap<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
+                    HashMap<String, Object> data = (HashMap<String,Object>) td.get(final_action);
+                    System.out.println("SAS " + td.toString());
+
+                    if(final_action=="song")
+                    {
+
+
+                        data = (HashMap<String,Object>) data.get(genreList[rand.nextInt(genreList.length)]);
+                        System.out.println("KEKW "+ data.toString());
+                    }
+
+
+
+                    int idx = rand.nextInt(data.size())+1;
+
+
+                    System.out.println("KEKW"+ idx);
+                    callCorrospondingNotificationMethod(final_action, data.get("k"+ idx).toString());
+                    //callMessageNotification(songs.get("song1").toString());
+                    //songname = songs.get("song1");
+                    //System.out.println("end");
+                    //   List<Object> values = td.values();
+
+                    //notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
+
+    protected void sendSMS() {
+        Log.i("Send SMS", "");
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+        smsIntent.setData(Uri.parse("smsto:"));
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address"  , new String ("4803108822"));
+        smsIntent.putExtra("sms_body"  , "Hi, I am feeling bit low, can we catchup?");
+
+        try {
+            smsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(smsIntent);
+            //finish();
+            Log.i("Finished sending SMS...", "");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,
+                    "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
-    private void callCorrospondingNotificationMethod(String data, boolean isImageNotification)
+    private void callCorrospondingNotificationMethod(String final_action, String value)
     {
         //boolean isImageNotification=true;
 
 
-        if(isImageNotification)
+        if(final_action=="meme")
         {
             new AsyncTask<Void, Void, Bitmap>() {
                 @Override
@@ -239,7 +241,7 @@ public class KeyLogger extends AccessibilityService {
                     try {
 
                         System.out.println("SHERLOCK HERE HERE");
-                        Bitmap picture = BitmapFactory.decodeStream(new java.net.URL(data).openStream());
+                        Bitmap picture = BitmapFactory.decodeStream(new java.net.URL(value).openStream());
                         return picture;
 
                     } catch (IOException e) {
@@ -252,15 +254,21 @@ public class KeyLogger extends AccessibilityService {
 
 //                    loadingpic = picture;
                     System.out.println("SHERLOCKED");
-                    callImageNotification(picture, data);
+                    callImageNotification(picture, value);
 
 
                 }
             }.execute();
         }
-        else
+        else if(final_action=="song"){
+            String displayData = value.split("-")[0]+ " " +value.split("-")[1];
+            String link = value.split("-")[2];
+
+            System.out.println("SONG "+ displayData+ " -- "+ link);
+            callMessageNotification(displayData,link);
+        }else
         {
-            callMessageNotification(data);
+            callMessageNotification(value, null);
         }
     }
 
@@ -272,12 +280,12 @@ public class KeyLogger extends AccessibilityService {
     }
 
 
-    private void callMessageNotification(String joke)
+    private void callMessageNotification(String displayData, String link)
     {
         System.out.println("PogU");
 
         NewMessageNotification naman = new NewMessageNotification();
-        naman.notify(this, joke, 5, "1");
+        naman.notify(this, displayData, link, 5, "1");
     }
 
 

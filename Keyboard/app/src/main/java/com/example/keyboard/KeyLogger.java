@@ -1,7 +1,9 @@
 package com.example.keyboard;
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,10 +14,13 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -110,6 +115,8 @@ public class KeyLogger extends AccessibilityService {
 
             //float modifiedScore = score*magnitude*100;
 
+
+
             getData(score*100);
 
 
@@ -127,12 +134,15 @@ public class KeyLogger extends AccessibilityService {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dataRef = database.getReference(currentUser.getUid());
 
-        String [] genreList = {"Chill", "hip-hop", "pop", "rock"};
+        SharedPreferences sharedPreferences = this.getSharedPreferences("DATA", Context.MODE_PRIVATE);
+        System.out.println("DrDisrespect " + sharedPreferences.getString("STRENGTH",null));
+        String [] genreList;
+        //{"Chill", "hip-hop", "pop", "rock"}
 
         String action=null;
-        //score = -90;
+        score = -30;
         score = (int) score;
-        System.out.println("SCORE "+score);
+        //System.out.println("SCORE "+score);
         if(score<0 && score>=-20)
         {
             action = "joke";
@@ -145,10 +155,10 @@ public class KeyLogger extends AccessibilityService {
         {
             action = "song";
         }
-//        else if(score<-60 && score>=-80)
-//        {
-//            action = "familypic";
-//        }
+        else if(score<-60 && score>=-80)
+        {
+            action = "familypic";
+        }
         else if(score<-80 && score>=-100)
         {
             action = "text";
@@ -169,17 +179,42 @@ public class KeyLogger extends AccessibilityService {
 
                     Random rand = new Random();
 
-                    System.out.println("start "+final_action);
+                    //System.out.println("start "+final_action);
                     HashMap<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
                     HashMap<String, Object> data = (HashMap<String,Object>) td.get(final_action);
-                    System.out.println("SAS " + td.toString());
+                    //System.out.println("SAS " + td.toString());
 
                     if(final_action=="song")
                     {
 
+                        ArrayList<String> al = new ArrayList<String>();
 
-                        data = (HashMap<String,Object>) data.get(genreList[rand.nextInt(genreList.length)]);
-                        System.out.println("KEKW "+ data.toString());
+                        if(sharedPreferences.getString("Rock",null)=="1")
+                        {
+                            al.add("rock");
+                        }
+
+                        if(sharedPreferences.getString("Hip_hop",null)=="1")
+                        {
+                            al.add("hip-hop");
+                        }
+
+                        if(sharedPreferences.getString("Pop",null)=="1")
+                        {
+                            al.add("pop");
+                        }
+
+                        if(sharedPreferences.getString("Chill",null)=="1")
+                        {
+                            al.add("Chill");
+                        }
+
+
+                        //data = (HashMap<String,Object>) data.get(genreList[rand.nextInt(genreList.length)]);
+
+                        data = (HashMap<String,Object>) data.get(al.get(rand.nextInt(al.size())));
+
+                        //System.out.println("KEKW "+ data.toString());
                     }
 
 
@@ -187,7 +222,7 @@ public class KeyLogger extends AccessibilityService {
                     int idx = rand.nextInt(data.size())+1;
 
 
-                    System.out.println("KEKW"+ idx);
+                    //System.out.println("KEKW"+ idx);
                     callCorrospondingNotificationMethod(final_action, data.get("k"+ idx).toString());
                     //callMessageNotification(songs.get("song1").toString());
                     //songname = songs.get("song1");
@@ -231,6 +266,12 @@ public class KeyLogger extends AccessibilityService {
     {
         //boolean isImageNotification=true;
 
+        if(final_action=="familyPic")
+        {
+            value = "file://"+value;
+        }
+
+        final String newVal = value;
 
         if(final_action=="meme")
         {
@@ -241,7 +282,11 @@ public class KeyLogger extends AccessibilityService {
                     try {
 
                         System.out.println("SHERLOCK HERE HERE");
-                        Bitmap picture = BitmapFactory.decodeStream(new java.net.URL(value).openStream());
+//                        if(final_action=="familyPic")
+//                        {
+//                            value+="file://"+
+//                        }
+                        Bitmap picture = BitmapFactory.decodeStream(new java.net.URL(newVal).openStream());
                         return picture;
 
                     } catch (IOException e) {
@@ -253,18 +298,18 @@ public class KeyLogger extends AccessibilityService {
                 protected void onPostExecute(Bitmap picture) {
 
 //                    loadingpic = picture;
-                    System.out.println("SHERLOCKED");
-                    callImageNotification(picture, value);
+                    //System.out.println("SHERLOCKED");
+                    callImageNotification(picture, newVal);
 
 
                 }
             }.execute();
         }
         else if(final_action=="song"){
-            String displayData = value.split("-")[0]+ " " +value.split("-")[1];
+            String displayData = value.split("-")[0]+ "By" +value.split("-")[1];
             String link = value.split("-")[2];
 
-            System.out.println("SONG "+ displayData+ " -- "+ link);
+            //System.out.println("SONG "+ displayData+ " -- "+ link);
             callMessageNotification(displayData,link);
         }else
         {
@@ -274,7 +319,7 @@ public class KeyLogger extends AccessibilityService {
 
     private void callImageNotification(Bitmap picture, String link)
     {
-        System.out.println("PogU");
+        //System.out.println("PogU");
         NewImageNotification naman = new NewImageNotification();
         naman.notify(this, link, 5, "1", picture);
     }
@@ -282,7 +327,7 @@ public class KeyLogger extends AccessibilityService {
 
     private void callMessageNotification(String displayData, String link)
     {
-        System.out.println("PogU");
+        //System.out.println("PogU");
 
         NewMessageNotification naman = new NewMessageNotification();
         naman.notify(this, displayData, link, 5, "1");

@@ -60,8 +60,17 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
 
 
             //final String ticker = exampleString;
-            final String title = "Hey a new joke pepeLaugh";
+            final String type = link==null ? "joke" : "song";
+            String title = "Here is a "+type+" for you.";
             final String text = displayData;
+            String summaryText = "A new "+type;
+
+            if(link!=null)
+            {
+                title += "Click this to play.";
+            }
+
+
             //link = ;
             //System.out.println("LINK THE SINH" +link+"--------");
 
@@ -119,27 +128,27 @@ public class NewMessageNotification/* extends AsyncTask<Void, Void, Bitmap>*/ {
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(text)
                             .setBigContentTitle(title)
-                            .setSummaryText("A new joke LUL"))
+                            .setSummaryText(summaryText))
 
                     // Example additional actions for this notification. These will
                     // only show on devices running Android 4.1 or later, so you
                     // should ensure that the activity in this notification's
                     // content intent provides access to the same actions in
                     // another way.
-                    .addAction(
-                            R.drawable.ic_action_stat_share,
-                            res.getString(R.string.action_share),
-                            PendingIntent.getActivity(
-                                    context,
-                                    0,
-                                    Intent.createChooser(new Intent(Intent.ACTION_SEND)
-                                            .setType("text/plain")
-                                            .putExtra(Intent.EXTRA_TEXT, "Dummy text"), "Dummy title"),
-                                    PendingIntent.FLAG_UPDATE_CURRENT))
-                    .addAction(
-                            R.drawable.ic_action_stat_reply,
-                            res.getString(R.string.action_reply),
-                            null)
+//                    .addAction(
+//                            R.drawable.ic_action_stat_share,
+//                            res.getString(R.string.action_share),
+//                            PendingIntent.getActivity(
+//                                    context,
+//                                    0,
+//                                    Intent.createChooser(new Intent(Intent.ACTION_SEND)
+//                                            .setType("text/plain")
+//                                            .putExtra(Intent.EXTRA_TEXT, "Dummy text"), "Dummy title"),
+//                                    PendingIntent.FLAG_UPDATE_CURRENT))
+//                    .addAction(
+//                            R.drawable.ic_action_stat_reply,
+//                            res.getString(R.string.action_reply),
+//                            null)
 
                     // Automatically dismiss the notification when it is touched.
                     .setAutoCancel(true);

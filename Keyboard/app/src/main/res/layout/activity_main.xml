@@ -9,70 +9,13 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="103dp"
-        android:layout_height="39dp"
+        android:layout_width="138dp"
+        android:layout_height="43dp"
         android:layout_marginStart="108dp"
         android:layout_marginLeft="108dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="60dp"
         android:onClick="updatePreference"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/pop"
-        android:layout_width="113dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="102dp"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="292dp"
-        android:onClick="updatePreference"
-        android:text="Pop"
-        app:layout_constraintEnd_toEndOf="@+id/chill"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="102dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="109dp"
-        android:layout_marginLeft="109dp"
-        android:layout_marginTop="420dp"
-        android:onClick="updatePreference"
-        android:text="Submit"
-        app:layout_constraintEnd_toEndOf="@+id/hip_hop"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/rock"
-        android:layout_width="113dp"
-        android:layout_height="29dp"
-        android:layout_marginStart="103dp"
-        android:layout_marginLeft="103dp"
-        android:layout_marginTop="336dp"
-        android:onClick="updatePreference"
-        android:text="Rock"
-        app:layout_constraintEnd_toEndOf="@+id/pop"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/chill"
-        android:layout_width="116dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="101dp"
-
-        android:layout_marginLeft="101dp"
-        android:layout_marginTop="248dp"
-        android:onClick="updatePreference"
-        android:text="Chill"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,13 +23,10 @@
         android:id="@+id/hip_hop"
         android:layout_width="113dp"
         android:layout_height="29dp"
-        android:layout_marginStart="103dp"
-        android:layout_marginLeft="103dp"
-        android:layout_marginTop="375dp"
+        android:layout_marginTop="284dp"
         android:onClick="updatePreference"
         android:text="Hip-hop"
-        app:layout_constraintEnd_toEndOf="@+id/rock"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/rock"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -94,27 +34,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="121dp"
+        android:layout_marginTop="440dp"
         android:layout_weight="0"
         android:text="Load Picture"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent">
 
     </Button>
+
+    <CheckBox
+        android:id="@+id/chill"
+        android:layout_width="116dp"
+        android:layout_height="31dp"
+
+        android:layout_marginTop="160dp"
+        android:onClick="updatePreference"
+        android:text="Chill"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="128dp"
         android:onClick="updatePreference"
         android:text="Select preference for music"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
-        app:layout_constraintHorizontal_bias="0.308"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sign_in_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/rock"
+        android:layout_width="113dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="248dp"
+        android:onClick="updatePreference"
+        android:text="Rock"
+        app:layout_constraintStart_toStartOf="@+id/pop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="396dp"
+        android:onClick="updatePreference"
+        android:text="Select family photo"
+        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="102dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="332dp"
+        android:onClick="updatePreference"
+        android:text="Submit"
+        app:layout_constraintStart_toStartOf="@+id/hip_hop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/pop"
+        android:layout_width="113dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="204dp"
+        android:onClick="updatePreference"
+        android:text="Pop"
+        app:layout_constraintStart_toStartOf="@+id/chill"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

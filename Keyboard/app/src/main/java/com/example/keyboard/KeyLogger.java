@@ -8,11 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -48,7 +50,9 @@ public class KeyLogger extends AccessibilityService {
     static private CloudNaturalLanguage naturalLanguageService;
     static private Document document;
     static private Features features;
-
+    static final String appDirectoryName = "Telepathy";
+    static final File imageRoot = new File(Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_PICTURES), appDirectoryName);
 
 
     void getSentiment(String text, final String time){
@@ -140,7 +144,7 @@ public class KeyLogger extends AccessibilityService {
         //{"Chill", "hip-hop", "pop", "rock"}
 
         String action=null;
-        score = -70;
+        //score = -70;
         score = (int) score;
         //System.out.println("SCORE "+score);
         if(score<0 && score>=-20)
@@ -174,7 +178,15 @@ public class KeyLogger extends AccessibilityService {
         else if(final_action=="familyPic")
         {
             //get random URL
-            callCorrospondingNotificationMethod(final_action, "/storage/emulated/0/Pictures/Telepathy/image26.jpg");
+
+            //get random URL
+            imageRoot.mkdirs();
+            //System.out.println(imageRoot);
+            File[] files = imageRoot.listFiles();
+            Random rand = new Random();
+            File file = files[rand.nextInt(files.length)];
+            System.out.println(file);
+            callCorrospondingNotificationMethod(final_action, file.toString());
         }
         else if(action!=null)
         {

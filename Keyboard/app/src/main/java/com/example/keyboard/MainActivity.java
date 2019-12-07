@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -100,7 +101,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
 
-        
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+
         //google end
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             Random r = new Random();
 
-            copyFile(picturePath, imageRoot+"/image"+Integer.toString(r.nextInt(40))+"jpg");
+            copyFile(picturePath, imageRoot+"/image"+Integer.toString(r.nextInt(100))+".jpg");
 
 //            ImageView imageView = (ImageView) findViewById(R.id.imgView);
 //            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));

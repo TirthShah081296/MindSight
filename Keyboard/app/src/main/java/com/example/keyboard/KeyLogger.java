@@ -140,7 +140,7 @@ public class KeyLogger extends AccessibilityService {
         //{"Chill", "hip-hop", "pop", "rock"}
 
         String action=null;
-        score = -30;
+        score = -70;
         score = (int) score;
         //System.out.println("SCORE "+score);
         if(score<0 && score>=-20)
@@ -157,7 +157,7 @@ public class KeyLogger extends AccessibilityService {
         }
         else if(score<-60 && score>=-80)
         {
-            action = "familypic";
+            action = "familyPic";
         }
         else if(score<-80 && score>=-100)
         {
@@ -170,6 +170,11 @@ public class KeyLogger extends AccessibilityService {
         if(final_action=="text")
         {
             sendSMS();
+        }
+        else if(final_action=="familyPic")
+        {
+            //get random URL
+            callCorrospondingNotificationMethod(final_action, "/storage/emulated/0/Pictures/Telepathy/image26.jpg");
         }
         else if(action!=null)
         {
@@ -223,6 +228,8 @@ public class KeyLogger extends AccessibilityService {
 
 
                     //System.out.println("KEKW"+ idx);
+
+
                     callCorrospondingNotificationMethod(final_action, data.get("k"+ idx).toString());
                     //callMessageNotification(songs.get("song1").toString());
                     //songname = songs.get("song1");
@@ -266,6 +273,7 @@ public class KeyLogger extends AccessibilityService {
     {
         //boolean isImageNotification=true;
 
+
         if(final_action=="familyPic")
         {
             value = "file://"+value;
@@ -273,7 +281,7 @@ public class KeyLogger extends AccessibilityService {
 
         final String newVal = value;
 
-        if(final_action=="meme")
+        if(final_action=="meme" || final_action=="familyPic")
         {
             new AsyncTask<Void, Void, Bitmap>() {
                 @Override

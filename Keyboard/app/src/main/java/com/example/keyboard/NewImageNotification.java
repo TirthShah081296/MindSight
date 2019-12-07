@@ -100,7 +100,7 @@ public class NewImageNotification {
                         PendingIntent.getActivity(
                                 context,
                                 0,
-                                new Intent(Intent.ACTION_VIEW, Uri.parse(link)),
+                                new Intent(Intent.ACTION_VIEW, Uri.parse(link.startsWith("file") ? "" : link)),
                                 PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Show an expanded photo on devices running Android 4.1 or
